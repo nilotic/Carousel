@@ -36,13 +36,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		B7580B8C27E7F89B001BC80F /* Carousel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Carousel;
-			sourceTree = "<group>";
-		};
 		B7580B8E27E80E47001BC80F /* Component */ = {
 			isa = PBXGroup;
 			children = (
@@ -89,7 +82,6 @@
 			children = (
 				B7ED2DEF27E46F5200E7AF6C /* CarouselApp.swift */,
 				B7ED2DF127E46F5200E7AF6C /* ContentView.swift */,
-				B7580B8C27E7F89B001BC80F /* Carousel */,
 				B7580B8E27E80E47001BC80F /* Component */,
 				B7ED2DF327E46F5300E7AF6C /* Assets.xcassets */,
 				B7ED2DF527E46F5300E7AF6C /* Preview Content */,
