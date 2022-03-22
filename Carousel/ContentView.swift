@@ -32,7 +32,7 @@ struct ContentView: View {
     }
     
     private var firstItemPositionX: CGFloat {
-        (length * CGFloat(itemCount) + spacing *  CGFloat(itemCount)) / 2 + spacing + length
+        (length * CGFloat(max(0, itemCount - 1)) + spacing *  CGFloat(max(0, itemCount - 1))) / 2 + size.width / 2
     }
     
     
