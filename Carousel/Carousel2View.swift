@@ -49,17 +49,13 @@ struct Carousel2View: View {
                         }
                         .frame(width: length, height: length)
                         .frame { value in
-                            let range = length + spacing
-                            
                             var ratio: CGFloat {
                                 switch value.origin.x {
-                                case (proxy.size.width / 2 - length / 2)...(proxy.size.width + length / 2 + spacing):
-                                    let offset = (proxy.size.width + length / 2 + spacing) - (proxy.size.width / 2) - value.origin.x
-                                    return offset / range
+                                case (-spacing)...(proxy.size.width * 3 / 2):
+                                    return proxy.size.width + spacing
                                     
-                                case -(length + spacing / 2)..<(proxy.size.width / 2 - length / 2):
-                                    let offset = ((proxy.size.width - length) / 2) - value.origin.x
-                                    return 1 - offset / range
+                                case (spacing * 3 / 2 - proxy.size.width)..<spacing:
+                                    return 1 - ((spacing - value.origin.x) / (proxy.size.width + spacing))
                                     
                                 default:
                                     return 0
