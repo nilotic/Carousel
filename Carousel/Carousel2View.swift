@@ -16,7 +16,7 @@ struct Carousel2View: View {
     @State private var currentIndex    = 0
     @State private var isDragging      = false
 
-    @State private var length: CGFloat  = 335
+    @State private var length: CGFloat  = 0
     @State private var previousIndex: Int? = nil
     
     @GestureState private var offsetState: CGSize = .zero
@@ -78,8 +78,8 @@ struct Carousel2View: View {
                 }
                 .position(x: firstItemPositionX + pointX + offsetState.width, y: proxy.size.height / 2)
                 .task {
-                    size = proxy.size
-                    //length = 375 - 40
+                    size   = proxy.size
+                    length = proxy.size.width - spacing * 2
                 }
             }
             
@@ -143,7 +143,7 @@ struct Carousel2View: View {
 }
 
 #if DEBUG
-struct Carousel3View_Previews: PreviewProvider {
+struct Carousel2View_Previews: PreviewProvider {
     
     static var previews: some View {
         let view = Carousel2View()
