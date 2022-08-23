@@ -13,7 +13,7 @@ struct Carousel2View: View {
     // MARK: Private
     @State private var pointX: CGFloat = 0
     @State private var size: CGSize    = .zero
-    @State private var currentIndex    = 0
+    @State private var index    = 0
     @State private var isDragging      = false
 
     @State private var length: CGFloat  = 0
@@ -67,12 +67,9 @@ struct Carousel2View: View {
                             }
                             
                             
-//                            print(" \(ratio)  \(Int(value.origin.x))  \(proxy.size.width / 2 - length / 2) ~  \(proxy.size.width + length / 2 + spacing)  ||   \(-(length + spacing / 2)) ~ \(proxy.size.width / 2 - length / 2)")
-                            
-                            
                             // Update currentIndex
                             guard 0.5 < ratio else { return }
-                            currentIndex = i
+                            index = i
                         }
                     }
                 }
@@ -84,7 +81,7 @@ struct Carousel2View: View {
             }
             
             
-            currentItemView
+            indexView
             guideLineView
         }
         .frame(height: 300)
@@ -98,23 +95,24 @@ struct Carousel2View: View {
                     isDragging = true
                     
                     guard previousIndex == nil else { return }
-                    previousIndex = currentIndex
+                    previousIndex = index
                 }
                 .onEnded { value in
                     isDragging = false
                     pointX += value.translation.width
                     
-                    var targetPointX = -(CGFloat(currentIndex) * length + (CGFloat(currentIndex) * spacing))
-                    let delta = abs(currentIndex - (previousIndex ?? 0))
-                    
+                    var targetPointX  = -(CGFloat(index) * length + (CGFloat(index) * spacing))
+                    let previousIndex = (previousIndex ?? 0)
                     
                     // Calcualte velocity
-                    if 150 < value.predictedEndTranslation.width, delta < 1 {         // Left
-                        targetPointX = -(CGFloat(max(0, currentIndex - 1)) * length + (CGFloat(max(0, currentIndex - 1)) * spacing))
+                    if 150 < value.predictedEndTranslation.width {         // Left
+                        targetPointX = -(CGFloat(max(0, previousIndex - 1)) * length + (CGFloat(max(0, index - 1)) * spacing))
                         
-                    } else if value.predictedEndTranslation.width < -150, delta < 1 { // Right
-                        targetPointX = -(CGFloat(min(itemCount - 1, currentIndex)) * length + (CGFloat(min(itemCount - 1, currentIndex)) * spacing))
+                    } else if value.predictedEndTranslation.width < -150 { // Right
+                        targetPointX = -(CGFloat(min(itemCount - 1, previousIndex + 1)) * length + (CGFloat(min(itemCount - 1, previousIndex + 1)) * spacing))
                     }
+                    
+                    self.previousIndex = nil
                     
                     withAnimation(.spring(response: 0.5, dampingFraction: 0.9, blendDuration: 0)) {
                         pointX = targetPointX
@@ -130,8 +128,8 @@ struct Carousel2View: View {
             .frame(width: length, height: length)
     }
     
-    private var currentItemView: some View {
-        Text("\(currentIndex)")
+    private var indexView: some View {
+        Text("\(index)")
             .font(.system(size: 30, weight: .bold))
             .offset(y: -200)
     }
